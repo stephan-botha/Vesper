@@ -29,7 +29,7 @@ public class SamplePlayerController : OVRPlayerController
 {
       
 
-    public OVRInput.Button runButton = OVRInput.Button.One;
+    public OVRInput.Button runButton = OVRInput.Button.Two;
     public OVRInput.Button speedDecrease = OVRInput.Button.PrimaryIndexTrigger;
     public OVRInput.Button speedIncrease = OVRInput.Button.SecondaryIndexTrigger;
 

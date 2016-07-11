@@ -9,6 +9,8 @@ TagManager:
   - Fader
   - Insect
   - Owl
+  - Enemy
+  - Energy
   layers:
   - Default
   - TransparentFX
