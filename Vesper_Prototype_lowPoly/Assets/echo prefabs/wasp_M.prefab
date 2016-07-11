@@ -147,7 +147,7 @@ GameObject:
   - 135: {fileID: 13580636}
   m_Layer: 0
   m_Name: wasp_M
-  m_TagString: Enemy
+  m_TagString: Insect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -537,28 +537,68 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1.15
   MinDistance: 1
-  MaxDistance: 300
+  MaxDistance: 400
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
+    - time: 0.0025
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -400.15936
+      outSlope: -400.15936
+      tangentMode: 0
+    - time: 0.005
+      value: 0.5
+      inSlope: -100.03984
+      outSlope: -100.03984
+      tangentMode: 0
+    - time: 0.01
+      value: 0.25
+      inSlope: -25.00996
+      outSlope: -25.00996
+      tangentMode: 0
+    - time: 0.02
+      value: 0.125
+      inSlope: -6.25249
+      outSlope: -6.25249
+      tangentMode: 0
+    - time: 0.04275482
+      value: 0.07061808
+      inSlope: -1.5631225
+      outSlope: -1.5631225
+      tangentMode: 0
+    - time: 0.08
+      value: 0.04748616
+      inSlope: -0.39078063
+      outSlope: -0.39078063
+      tangentMode: 0
+    - time: 0.16275482
+      value: 0.03186116
+      inSlope: -0.09769516
+      outSlope: -0.09769516
+      tangentMode: 0
+    - time: 0.32
+      value: 0.01998962
+      inSlope: -0.027241359
+      outSlope: -0.027241359
+      tangentMode: 0
+    - time: 0.64
+      value: 0.01608337
+      inSlope: -0.0061059473
+      outSlope: -0.0061059473
       tangentMode: 0
     - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.0025
+      inSlope: -0.002500997
+      outSlope: -0.002500997
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -635,7 +675,6 @@ MonoBehaviour:
   startPosition: {fileID: 0}
   endPosition: {fileID: 0}
   speed: 3
-  insectMunch: {fileID: 8300000, guid: 725a3a177e8f55b46b31ba18b079b7c7, type: 3}
 --- !u!114 &11466298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -659,7 +698,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1000
+  m_Radius: 1300
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &13580636
 SphereCollider:

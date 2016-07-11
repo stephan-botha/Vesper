@@ -4,13 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - pickupAble
-  - bullet
-  - floor
-  - wall
+  - HUD
+  - Ground
   - Fader
-  - dontmove
-  - listlast
+  - Insect
+  - Owl
   layers:
   - Default
   - TransparentFX

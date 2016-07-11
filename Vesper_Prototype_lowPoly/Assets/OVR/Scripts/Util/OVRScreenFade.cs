@@ -96,10 +96,27 @@ public class OVRScreenFade : MonoBehaviour
 		isFading = false;
 	}
 
-	/// <summary>
-	/// Renders the fade overlay when attached to a camera object
-	/// </summary>
-	void OnPostRender()
+    IEnumerator FadeOut()
+    {
+        float elapsedTime = 0.0f;        
+        Color color = fadeColor;
+        color.a = 0.0f;
+        fadeMaterial.color = color;
+        isFading = true;        
+        while (elapsedTime < fadeTime)
+        {
+            yield return fadeInstruction;
+            elapsedTime += Time.deltaTime;
+            color.a +=  Mathf.Clamp01(elapsedTime / fadeTime);
+            fadeMaterial.color = color;
+        }
+        isFading = false;
+    }
+
+    /// <summary>
+    /// Renders the fade overlay when attached to a camera object
+    /// </summary>
+    void OnPostRender()
 	{
 		if (isFading)
 		{
@@ -116,4 +133,15 @@ public class OVRScreenFade : MonoBehaviour
 			GL.PopMatrix();
 		}
 	}
+
+    public float triggerFadeOut()
+    {
+        StartCoroutine(FadeOut());
+        return fadeTime;    
+    }
+
+    public void triggerFadeIn()
+    {
+        StartCoroutine(FadeIn());
+    }
 }

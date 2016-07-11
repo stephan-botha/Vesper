@@ -7,13 +7,13 @@ public class EnemyMovement : MonoBehaviour {
     public Transform endPosition;
     public float speed = 10.0f;
     AudioSource insectAudio;
-    public AudioClip insectMunch;
+    
 
     private Rigidbody rb;
     Vector3 direction;
     Transform destination;
 
-    bool isMunching = false;
+    //bool isMunching = false;
 
     void Awake()
     {
@@ -29,12 +29,12 @@ public class EnemyMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (isMunching)
-        {
+        //if (isMunching)
+        //{
             
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-        }
-        else
+        //    rb.constraints = RigidbodyConstraints.FreezeAll;
+        //}
+        //else
         {
 
             rb.MovePosition(this.transform.position + direction * speed * Time.fixedDeltaTime);
@@ -54,17 +54,5 @@ public class EnemyMovement : MonoBehaviour {
         this.transform.right = -direction;
     }
     
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.collider.CompareTag("Player") && isMunching == false)
-        {
-            insectAudio.Stop();
-            insectAudio.clip = insectMunch;
-            insectAudio.Play();
-            isMunching = true;     
-            Destroy(this.gameObject, 3.3f);
-            Quaternion Q = Quaternion.AngleAxis(180, this.transform.right);
-            rb.MoveRotation(Q);
-        }
-    }
+    
 }

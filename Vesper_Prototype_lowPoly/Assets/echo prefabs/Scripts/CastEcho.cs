@@ -4,9 +4,8 @@ using System.Collections;
 public class CastEcho : MonoBehaviour
 {
         
-    public GameObject EchoWave;    
-    [SerializeField] private AudioClip echoSound;
-    AudioSource batAudio;
+    public GameObject EchoWave;
+    PlayerAudioManager audioManager;
     GameObject camera;
 
     float timer;
@@ -14,8 +13,9 @@ public class CastEcho : MonoBehaviour
 
     void Awake()
     {
-        batAudio = GetComponent<AudioSource>();
+        
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+        audioManager = GetComponent<PlayerAudioManager>();
     }
 
 
@@ -30,8 +30,7 @@ public class CastEcho : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(90.0f, xAxis);
             Transform cameraTransform = camera.transform;
             Instantiate( EchoWave, transform.position, cameraTransform.rotation * rotation );
-            batAudio.clip = echoSound;
-            batAudio.Play();
+            audioManager.PlayAudioEcho();
             timer = 0f;
         }
 

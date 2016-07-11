@@ -26,9 +26,10 @@ public class TransformEcho : MonoBehaviour {
 //-------------------------------------------------------------------------------------------------------------
 
     void Start()
-    {        
-       // this.transform.localScale -= new Vector3(scaleFactor, scaleFactor, scaleFactor);
-        transform.position = playerShooting.transform.position;
+    {
+        // this.transform.localScale -= new Vector3(scaleFactor, scaleFactor, scaleFactor);
+        transform.position = playerShooting.transform.position;// + camera.transform.forward * 30.0f;
+        
         startEchoMarker = transform.position;
         targetEchoMarker = transform.position + camera.transform.forward * echoRange;
         echoTravelDistance = Vector3.Distance(startEchoMarker, targetEchoMarker);              
@@ -44,10 +45,10 @@ public class TransformEcho : MonoBehaviour {
         float distanceMoved = timer * echoSpeed;
         float fractionMoved = distanceMoved / echoTravelDistance;
 
-        this.transform.localScale += new Vector3( 
-            fractionMoved * scaleFactor, 
-            fractionMoved * scaleFactor / 5.0f, 
-            fractionMoved * scaleFactor );
+        //this.transform.localScale += new Vector3(
+        //    fractionMoved * scaleFactor,
+        //    fractionMoved * 0.0f ,
+        //    fractionMoved * scaleFactor );
 
         transform.position = Vector3.Lerp(startEchoMarker, targetEchoMarker, fractionMoved);
         
@@ -64,6 +65,6 @@ public class TransformEcho : MonoBehaviour {
     public void DestroyEcho()
     {
         Destroy(gameObject, 0f);
-    }
+    }    
 
 }

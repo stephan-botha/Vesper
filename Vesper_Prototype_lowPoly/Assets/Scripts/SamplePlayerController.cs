@@ -27,22 +27,22 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CharacterController))]
 public class SamplePlayerController : OVRPlayerController
 {
-
-    
+      
 
     public OVRInput.Button runButton = OVRInput.Button.One;
-    public OVRInput.Button alternateRunButton = OVRInput.Button.PrimaryThumbstick;
+    public OVRInput.Button speedDecrease = OVRInput.Button.PrimaryIndexTrigger;
+    public OVRInput.Button speedIncrease = OVRInput.Button.SecondaryIndexTrigger;
 
-    public float flySpeed = 8.0f;
+
+    public float maxFlySpeed = 32.0f;
+    public float minFlySpeed = 6.0f;
+    float currentFlySpeed = 0.0f;
     public float FPS = 0.0f;
     public Vector3 cn;
 
     public Vector3 pn;
     public Quaternion playerDirection1;
-    public Vector3 MoveThrottle_1;
-    public Vector3 MoveThrottle_2;
-    public Vector3 MoveThrottle_3;
-    public Vector3 MoveThrottle_4;
+    
     public Vector3 moveDirection1;
 
 
@@ -96,32 +96,34 @@ public class SamplePlayerController : OVRPlayerController
             CameraRig = cameraRigs[0];
 
         InitialYRotation_ = transform.rotation.eulerAngles.y;
+
+        //currentFlySpeed = minFlySpeed;
     }
 
     protected new void Update()
     {
-        if (useProfileData)
-        {
-            if (InitialPose_ == null)
-            {
-                InitialPose_ = new OVRPose()
-                {
-                    position = CameraRig.transform.localPosition,
-                    orientation = CameraRig.transform.localRotation
-                };
-            }
+        //if (useProfileData)
+        //{
+        //    if (InitialPose_ == null)
+        //    {
+        //        InitialPose_ = new OVRPose()
+        //        {
+        //            position = CameraRig.transform.localPosition,
+        //            orientation = CameraRig.transform.localRotation
+        //        };
+        //    }
 
-            var p = CameraRig.transform.localPosition;
-            p.y = OVRManager.profile.eyeHeight - 0.5f * Controller.height;
-            p.z = OVRManager.profile.eyeDepth;
-            CameraRig.transform.localPosition = p;
-        }
-        else if (InitialPose_ != null)
-        {
-            CameraRig.transform.localPosition = InitialPose_.Value.position;
-            CameraRig.transform.localRotation = InitialPose_.Value.orientation;
-            InitialPose_ = null;
-        }
+        //    var p = CameraRig.transform.localPosition;
+        //    p.y = OVRManager.profile.eyeHeight - 0.5f * Controller.height;
+        //    p.z = OVRManager.profile.eyeDepth;
+        //    CameraRig.transform.localPosition = p;
+        //}
+        //else if (InitialPose_ != null)
+        //{
+        //    CameraRig.transform.localPosition = InitialPose_.Value.position;
+        //    CameraRig.transform.localRotation = InitialPose_.Value.orientation;
+        //    InitialPose_ = null;
+        //}
 
         UpdateMovement();
 
@@ -292,7 +294,7 @@ public class SamplePlayerController : OVRPlayerController
         // rightAxisX = AngleDifference(cn.y, pn.y) / 45.0f;
 
 
-        if (Mathf.Abs(rightAxisX) < axisDeadZone)
+        if (Mathf.Abs(rightAxisX) < axisDeadZone || currentFlySpeed == 0.0f)
             rightAxisX = 0;
 
         PendingRotation += rightAxisX * rotateInfluence;
@@ -351,66 +353,99 @@ public class SamplePlayerController : OVRPlayerController
         float moveInfluence = SimulationRate_ * Time.deltaTime * Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
 
         // Run!
-        if (OVRInput.Get(runButton) || OVRInput.Get(alternateRunButton) || Input.GetKey(KeyCode.LeftShift))
+        if (OVRInput.Get(runButton))
+        {
             moveInfluence *= 2.0f;
-
-
-        float leftAxisX = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x;
-        float leftAxisY = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).y;
-
-        if (Mathf.Abs(leftAxisY) > axisDeadZone)
-        {            
-            flySpeed += 0.1f * Mathf.Sign(leftAxisY);
-            if (flySpeed > 16.0f)
-            {
-                flySpeed = 16.0f;
-            }
-            else if (flySpeed < 4.0f)
-            {
-                flySpeed = 4.0f;
-            }
-            
         }
-        if (Mathf.Abs(leftAxisX) < axisDeadZone)
-            leftAxisX = 0;
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            leftAxisY = 1;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            leftAxisX = -1;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            leftAxisX = 1;
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            leftAxisY = -1;
+        {
+            // controller left thumb stick speed control
+         //float leftAxisX = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).x;
+         //float leftAxisY = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick).y;
 
-        leftAxisY = flySpeed;
+            //if (Mathf.Abs(leftAxisY) > axisDeadZone)
+            //{            
+            //    currentFlySpeed += 0.1f * Mathf.Sign(leftAxisY);
+            //    if (currentFlySpeed > maxFlySpeed)
+            //    {
+            //        currentFlySpeed = maxFlySpeed;
+            //    }
+            //    else if (currentFlySpeed < minFlySpeed)
+            //    {
+            //        currentFlySpeed = minFlySpeed;
+            //    }            
+            //}
+
+            //if (Mathf.Abs(leftAxisX) < axisDeadZone)
+            //    leftAxisX = 0;
+
+            //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            //    leftAxisY = 1;
+            //if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            //    leftAxisY = -1;
+            //if (input.getkey(keycode.a) || input.getkey(keycode.leftarrow))
+            //    leftaxisx = -1;
+            //if (input.getkey(keycode.d) || input.getkey(keycode.rightarrow))
+            //    leftaxisx = 1;
+
+            //leftAxisY = currentFlySpeed;
+
+            //if (leftAxisY > 0.0f)
+            //{            
+            //    MoveThrottle_ += leftAxisY * (playerDirection * (Vector3.forward * moveInfluence));
+            //}
+            //else if (leftAxisY < 0.0f)
+            //{            
+            //    MoveThrottle_ += Mathf.Abs(leftAxisY) * (playerDirection * (Vector3.back * moveInfluence));
+            //}
+
+            //if (leftAxisX < 0.0f)
+            //{
+            //    MoveThrottle_3 = Mathf.Abs(leftAxisX)
+            //        * (playerDirection * (Vector3.left * moveInfluence));
+            //    MoveThrottle_ += MoveThrottle_3;
+            //}
+            //if (leftAxisX > 0.0f)
+            //{
+            //    MoveThrottle_4 = leftAxisX
+            //        * (playerDirection * (Vector3.right * moveInfluence));
+            //    MoveThrottle_ += MoveThrottle_4;
+            //}
+        }
+
+        float speedChange = 0.0f;
+        if (OVRInput.Get(speedDecrease))
+        {
+            speedChange = -0.25f;
+        }
+        else if (OVRInput.Get(speedIncrease))
+        {
+            speedChange = 0.25f;
+        }
+
+        currentFlySpeed += speedChange;
+        if (currentFlySpeed > maxFlySpeed)
+        {
+            currentFlySpeed = maxFlySpeed;
+        }
+        else if (currentFlySpeed < minFlySpeed && currentFlySpeed != 0.0f)
+        {
+            currentFlySpeed = minFlySpeed;
+        }
+        
+
+        float leftAxisY = currentFlySpeed;
 
         if (leftAxisY > 0.0f)
         {
-            MoveThrottle_1 = leftAxisY *
-                (playerDirection * (Vector3.forward * moveInfluence));
-            MoveThrottle_ += MoveThrottle_1;
+            MoveThrottle_ += leftAxisY * (playerDirection * (Vector3.forward * moveInfluence));
+        }
+        else if (leftAxisY < 0.0f)
+        {
+            MoveThrottle_ += Mathf.Abs(leftAxisY) * (playerDirection * (Vector3.back * moveInfluence));
         }
 
-        if (leftAxisY < 0.0f)
-        {
-            MoveThrottle_2 = Mathf.Abs(leftAxisY)
-                * (playerDirection * (Vector3.back * moveInfluence));
-            MoveThrottle_ += MoveThrottle_2;
-        }
 
-        if (leftAxisX < 0.0f)
-        {
-            MoveThrottle_3 = Mathf.Abs(leftAxisX)
-                * (playerDirection * (Vector3.left * moveInfluence));
-            MoveThrottle_ += MoveThrottle_3;
-        }
-        if (leftAxisX > 0.0f)
-        {
-            MoveThrottle_4 = leftAxisX
-                * (playerDirection * (Vector3.right * moveInfluence));
-            MoveThrottle_ += MoveThrottle_4;
-        }
         transform.rotation = Quaternion.Euler(euler);
     }
 

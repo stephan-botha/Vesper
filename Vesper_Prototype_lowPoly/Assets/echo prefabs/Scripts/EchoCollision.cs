@@ -24,7 +24,7 @@ public class EchoCollision : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
        
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Insect"))
         {
             InsectTextureManager insectTextureManager = other.GetComponent<InsectTextureManager>();
 

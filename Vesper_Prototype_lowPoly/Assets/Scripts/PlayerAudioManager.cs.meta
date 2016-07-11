@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 643cfbcc9cd3219458bd21120c7fb7aa
+timeCreated: 1467786206
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - echoSound: {fileID: 8300000, guid: c1180e902a859e94796aa585ccde6cfb, type: 3}
+  - insectMunch: {fileID: 8300000, guid: 725a3a177e8f55b46b31ba18b079b7c7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

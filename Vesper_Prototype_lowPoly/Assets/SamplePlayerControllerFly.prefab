@@ -56,6 +56,7 @@ GameObject:
   - 81: {fileID: 8157100}
   - 20: {fileID: 2019514}
   - 124: {fileID: 12458132}
+  - 114: {fileID: 11406452}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -112,6 +113,8 @@ GameObject:
   - 82: {fileID: 8238984}
   - 136: {fileID: 13686466}
   - 114: {fileID: 11476882}
+  - 114: {fileID: 11411974}
+  - 114: {fileID: 11480736}
   m_Layer: 11
   m_Name: SamplePlayerControllerFly
   m_TagString: Player
@@ -265,7 +268,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139486}
   m_LocalRotation: {x: 0, y: -0.9315331, z: 0, w: 0.36365658}
-  m_LocalPosition: {x: -131.9, y: 204.8, z: -70.09}
+  m_LocalPosition: {x: -131.9, y: 204.8, z: -74.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 468352}
@@ -431,7 +434,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c1180e902a859e94796aa585ccde6cfb, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.511
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -494,6 +497,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &11406452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b5ec6153a1d55438228df10fe66844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFog: 1
+  excludeFarPixels: 1
+  useRadialDistance: 0
+  heightFog: 0
+  height: 125
+  heightDensity: 1.2
+  startDistance: 0
+  fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
 --- !u!114 &11409518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -509,6 +531,19 @@ MonoBehaviour:
   _trackingOriginType: 0
   usePositionTracking: 1
   resetTrackerOnLoad: 1
+--- !u!114 &11411974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643cfbcc9cd3219458bd21120c7fb7aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  echoSound: {fileID: 8300000, guid: c1180e902a859e94796aa585ccde6cfb, type: 3}
+  insectMunch: {fileID: 8300000, guid: 725a3a177e8f55b46b31ba18b079b7c7, type: 3}
 --- !u!114 &11449650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -563,17 +598,15 @@ MonoBehaviour:
   HmdRotatesY: 1
   GravityModifier: 0.379
   useProfileData: 1
-  runButton: 1
-  alternateRunButton: 32768
-  flySpeed: 30
+  runButton: 2
+  speedDecrease: 8192
+  speedIncrease: 2097152
+  maxFlySpeed: 32
+  minFlySpeed: 6
   FPS: 0
   cn: {x: 0, y: 0, z: 0}
   pn: {x: 0, y: 0, z: 0}
   playerDirection1: {x: 0, y: 0, z: 0, w: 0}
-  MoveThrottle_1: {x: 0, y: 0, z: 0}
-  MoveThrottle_2: {x: 0, y: 0, z: 0}
-  MoveThrottle_3: {x: 0, y: 0, z: 0}
-  MoveThrottle_4: {x: 0, y: 0, z: 0}
   moveDirection1: {x: 0, y: 0, z: 0}
   rotationSnap: 0
   axisDeadZone: 0.1
@@ -589,7 +622,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EchoWave: {fileID: 107308, guid: 79e61a92bd829b64f8e38eb8d94577cf, type: 2}
-  echoSound: {fileID: 8300000, guid: c1180e902a859e94796aa585ccde6cfb, type: 3}
+--- !u!114 &11480736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f15e1df426b0dc4081f5751d6a62fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &12458132
 Behaviour:
   m_ObjectHideFlags: 1
@@ -634,7 +677,7 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
+  m_Height: 0.5
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
