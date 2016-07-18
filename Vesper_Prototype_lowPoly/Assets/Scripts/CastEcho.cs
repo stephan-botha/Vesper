@@ -7,9 +7,16 @@ public class CastEcho : MonoBehaviour
     public GameObject EchoWave;
     PlayerAudioManager audioManager;
     GameObject camera;
+    
+    void OnEnable()
+    {
+        EventManager.OnFireButton += InstantiateEcho;
+    }
 
-    float timer;
-
+    void OnDisable()
+    {
+        EventManager.OnFireButton -= InstantiateEcho;
+    }
 
     void Awake()
     {
@@ -19,21 +26,14 @@ public class CastEcho : MonoBehaviour
     }
 
 
-    void Update()
+    void InstantiateEcho()
     {
-        timer += Time.deltaTime;
-
-        if (Input.GetButtonDown("Fire1") )
-        {
-            //rotate echo object into camera direction
-            Vector3 xAxis = new Vector3(1.0f, 0.0f, 0.0f);            
-            Quaternion rotation = Quaternion.AngleAxis(90.0f, xAxis);
-            Transform cameraTransform = camera.transform;
-            Instantiate( EchoWave, transform.position, cameraTransform.rotation * rotation );
-            audioManager.PlayAudioEcho();
-            timer = 0f;
-        }
-
+        //rotate echo object into camera direction
+        Vector3 xAxis = new Vector3(1.0f, 0.0f, 0.0f);
+        Quaternion rotation = Quaternion.AngleAxis(90.0f, xAxis);
+        Transform cameraTransform = camera.transform;
+        Instantiate(EchoWave, transform.position, cameraTransform.rotation * rotation);
+        audioManager.PlayAudioEcho();
     }
 }
 

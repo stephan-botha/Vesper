@@ -72,13 +72,14 @@ public class OVRInspectorLoader : MonoBehaviour
             StartCoroutine(DelayedMenuSummon());
         }
         else if (summonMenuDelay == 0)
-            OVRInspector.instance.Show();
+        { }
+           // OVRInspector.instance.Show();
     }
 
     IEnumerator DelayedMenuSummon()
     {
         yield return new WaitForSeconds(summonMenuDelay);
-        OVRInspector.instance.Show();
+        //OVRInspector.instance.Show();
         // Now we don't need this anymore, disable it to reduce the draw call overhead
         gameObject.SetActive(false);
     }

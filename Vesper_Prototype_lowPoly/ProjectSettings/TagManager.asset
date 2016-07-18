@@ -11,6 +11,8 @@ TagManager:
   - Owl
   - Enemy
   - Energy
+  - TerrainObject
+  - Health
   layers:
   - Default
   - TransparentFX

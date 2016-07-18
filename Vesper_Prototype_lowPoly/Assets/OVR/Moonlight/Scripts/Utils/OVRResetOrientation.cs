@@ -20,7 +20,6 @@ limitations under the License.
 ************************************************************************************/
 
 using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Allows you to reset VR input tracking with a gamepad button press.
@@ -32,8 +31,6 @@ public class OVRResetOrientation : MonoBehaviour
 	/// </summary>
 	public OVRInput.RawButton resetButton = OVRInput.RawButton.Y;
 
-    float fadeTime = 0.0f;
-
 	/// <summary>
 	/// Check input and reset orientation if necessary
 	/// See the input mapping setup in the Unity Integration guide
@@ -43,19 +40,10 @@ public class OVRResetOrientation : MonoBehaviour
 		// NOTE: some of the buttons defined in OVRInput.RawButton are not available on the Android game pad controller
 		if (OVRInput.GetDown(resetButton))
 		{
-            fadeTime = GetComponent<OVRScreenFade>().triggerFadeOut();
-
-            StartCoroutine(ResetOrientation());
-        } 
-          
-        
+			//*************************
+			// reset orientation
+			//*************************
+			OVRManager.display.RecenterPose();
+		}
 	}
-
-    IEnumerator ResetOrientation()
-    {
-        yield return new WaitForSeconds(fadeTime);
-
-        OVRManager.display.RecenterPose();    
-        GetComponent<OVRScreenFade>().triggerFadeIn();        
-    }
 }

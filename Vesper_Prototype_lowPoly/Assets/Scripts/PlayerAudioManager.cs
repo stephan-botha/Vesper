@@ -26,7 +26,7 @@ public class PlayerAudioManager : MonoBehaviour {
     public void PlayAudioEcho()
     {
         batAudio.clip = echoSound;
-        batAudio.Play();
+        batAudio.Play();        
     }
 
     public void PlayAudioMunch()

@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class EventManager : MonoBehaviour {
-
-    public GameObject EchoWave;
-
+       
     public OVRInput.Button fireButton = OVRInput.Button.One;
     public OVRInput.Button hUDButton = OVRInput.Button.Three;
 
@@ -12,39 +10,29 @@ public class EventManager : MonoBehaviour {
     public static event HUDButton OnHUDButton;
     public delegate void FireButton();
     public static event FireButton OnFireButton;
-
-    PlayerAudioManager audioManager;
-    GameObject camera;
-
-    float timer;
-
-
-    void Awake()
+    public delegate void TerrainObjectCollision();
+    public static event TerrainObjectCollision OnTerrainObjectCollision;
+        
+    void Start()
     {
-
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
-        audioManager = GetComponent<PlayerAudioManager>();
+        
     }
-
-
+        
     void Update()
-    {
-        timer += Time.deltaTime;
-
+    {   
         if (OVRInput.GetDown (fireButton))        
         {
-            //rotate echo object into camera direction
-            Vector3 xAxis = new Vector3(1.0f, 0.0f, 0.0f);
-            Quaternion rotation = Quaternion.AngleAxis(90.0f, xAxis);
-            Transform cameraTransform = camera.transform;
-            Instantiate(EchoWave, transform.position, cameraTransform.rotation * rotation);
-
-            audioManager.PlayAudioEcho();
-            timer = 0f;
-
-            if (OnFireButton != null)
+            if (EnoughEnergy())
             {
-                OnFireButton();
+                if (OnFireButton != null)
+                {
+                    OnFireButton();
+                }
+            }
+
+            if (OnHUDButton != null)
+            {
+                OnHUDButton();
             }
 
         }
@@ -57,4 +45,39 @@ public class EventManager : MonoBehaviour {
         }
 
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (CheckForTerrainObjectCollision(other.gameObject) != null)
+        {
+            //Debug.Log("collision!!!");
+            if (OnTerrainObjectCollision != null)
+            {
+                OnTerrainObjectCollision();
+            }
+
+        }
+    }
+
+    GameObject CheckForTerrainObjectCollision(GameObject other)
+    {
+        Transform t = other.transform;
+        while (t.parent != null)
+        {
+            if (t.parent.CompareTag("TerrainObject"))
+            {
+                return t.parent.gameObject;
+            }
+            t = t.parent;
+        }
+
+        return null;
+    }
+
+    bool EnoughEnergy()
+    {
+        return GameManager.instance.currentEnergy >= GameManager.instance.echoCost;
+    }
+
 }

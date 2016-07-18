@@ -4,30 +4,33 @@ using System.Collections;
 public class PlayerCollision : MonoBehaviour {
 
     PlayerAudioManager audioManager;
-    
+
     void Awake()
     {
         audioManager = GetComponent<PlayerAudioManager>();
     }
-        // Use this for initialization
-        void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.collider.CompareTag("Insect"))
+        if (other.CompareTag("Insect"))
         {
-                       
+
             Destroy(other.gameObject, 0.0f);
             audioManager.PlayAudioMunch();
-            
+
         }
+       
     }
+
+   
 }
